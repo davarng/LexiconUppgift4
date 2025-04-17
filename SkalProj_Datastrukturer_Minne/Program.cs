@@ -62,9 +62,8 @@ class Program
     /// <summary>
     /// Examines the datastructure List
     /// </summary>
-    static void ExamineList()
-    {
-        /*
+
+    /*
          * Loop this method untill the user inputs something to exit to main menue.
          * Create a switch statement with cases '+' and '-'
          * '+': Add the rest of the input to the list (The user could write +Adam and "Adam" would be added to the list)
@@ -73,6 +72,9 @@ class Program
          * As a default case, tell them to use only + or -
          * Below you can see some inspirational code to begin working.
         */
+
+    static void ExamineList()
+    {
         Console.Write("Write a string starting with + to add to theList and starting with - to remove from theList: ");
         string input;
         List<string> theList = new List<string>();
@@ -113,14 +115,15 @@ class Program
     /// <summary>
     /// Examines the datastructure Queue
     /// </summary>
+
+    /*
+        * Loop this method untill the user inputs something to exit to main menue.
+        * Create a switch with cases to enqueue items or dequeue items
+        * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
+       */
+
     static void ExamineQueue()
     {
-        /*
-         * Loop this method untill the user inputs something to exit to main menue.
-         * Create a switch with cases to enqueue items or dequeue items
-         * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
-        */
-
         Console.Write("Write a string starting with + to add to theQueue and starting with - to remove from theQueue: ");
         string input;
         Queue<string> theQueue = new Queue<string>();
@@ -154,14 +157,16 @@ class Program
     /// <summary>
     /// Examines the datastructure Stack
     /// </summary>
+    /// 
+
+    /*
+        * Loop this method until the user inputs something to exit to main menue.
+        * Create a switch with cases to push or pop items
+        * Make sure to look at the stack after pushing and and poping to see how it behaves
+       */
+
     static void ExamineStack()
     {
-        /*
-         * Loop this method until the user inputs something to exit to main menue.
-         * Create a switch with cases to push or pop items
-         * Make sure to look at the stack after pushing and and poping to see how it behaves
-        */
-
         Console.Write("Write a string starting with + to add to theQueue and starting with - to remove from theQueue: ");
         string input;
         Stack<char> charStack = new Stack<char>();
@@ -199,20 +204,44 @@ class Program
         StringBuilder sbReverse = new StringBuilder();
 
         foreach (char c in charStack)
-            sbReverse.Append(c);
+            sbReverse.Append(charStack.Pop);
 
         Console.WriteLine(sbReverse.ToString());
     }
 
-    static void CheckParanthesis()
-    {
-        /*
+    /*
          * Use this method to check if the paranthesis in a string is Correct or incorrect.
          * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
          * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
-         */
+        
+                                                                                        (){}
+     
+     
+     */
+    static void CheckParanthesis()
+    {
+        Console.Write("Write a string with parenthesis and you will be informed if it is valid.");
+        string input = Console.ReadLine();
+
+        Stack<char> openP = new Stack<char>();
+
+        if (input.IndexOfAny(new[] { '(', ')', '[', ']', '{', '}' }) >= 0)
+        {
+            foreach (char c in openP)
+            {
+                if (c == '(' || c == '{' || c == '[')
+                    openP.Push(c);
+
+                else if (c == ')' || c == '}' || c == ']')
+                {
+
+                }
+            }
+        }
+        else
+            Console.WriteLine("Your string doesn't contain any parenthesis.");
+
 
     }
-
 }
 
