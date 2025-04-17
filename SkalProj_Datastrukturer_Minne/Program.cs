@@ -245,10 +245,10 @@ class Program
                     }
                 }
             }
-            if (openP.Count > 0)
+            if (openP.Count == 0)
                 Console.WriteLine("Your string is valid!");
             else
-                Console.WriteLine("The string you have given is not valid.");
+                Console.WriteLine("The string you have given is not valid." + openP.Count);
         }
         else
             Console.WriteLine("Your string doesn't contain any parenthesis.");
