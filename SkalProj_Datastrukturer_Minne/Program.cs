@@ -234,14 +234,24 @@ class Program
 
                 else if (c == ')' || c == '}' || c == ']')
                 {
+                    bool stackHasValue = openP.TryPop(out char pop);
 
+                    if (c == ')' && pop != '(' ||
+                        c == ']' && pop != '[' ||
+                        c == '}' && pop != '{')
+                    {
+                        Console.WriteLine("The string you have given is not valid.");
+                        return;
+                    }
                 }
             }
+            if (openP.Count > 0)
+                Console.WriteLine("Your string is valid!");
+            else
+                Console.WriteLine("The string you have given is not valid.");
         }
         else
             Console.WriteLine("Your string doesn't contain any parenthesis.");
-
-
     }
 }
 
