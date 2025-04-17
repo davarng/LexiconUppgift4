@@ -227,7 +227,7 @@ class Program
 
         if (input.IndexOfAny(new[] { '(', ')', '[', ']', '{', '}' }) >= 0)
         {
-            foreach (char c in openP)
+            foreach (char c in input)
             {
                 if (c == '(' || c == '{' || c == '[')
                     openP.Push(c);
@@ -245,10 +245,7 @@ class Program
                     }
                 }
             }
-            if (openP.Count == 0)
-                Console.WriteLine("Your string is valid!");
-            else
-                Console.WriteLine("The string you have given is not valid." + openP.Count);
+            Console.WriteLine("Your string is valid!");
         }
         else
             Console.WriteLine("Your string doesn't contain any parenthesis.");
