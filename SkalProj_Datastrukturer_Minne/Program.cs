@@ -13,6 +13,32 @@ class Program
     static void Main()
     {
 
+        //Questions
+        //1. The stack is LIFO(last in first out) which means that the deallocation order has to be the opposite of the allocation order.
+        //   For example like a stack of books where the first book you place in a stack has to be picked up last. On the stack we have 
+        //   value types, reference pointers and methods. The stack is also more efficient when it comes to performance.
+        //
+        //   The heap however contains the data that the pointers point to and does not have a specific order for allocation/deallocation.
+        //   To handle this there is something called garbage collection which in C# automatically handles deallocation when it sees that 
+        //   pointers are not able to be reached any more.
+        //
+        //   See picture "Stack and heap drawing" in Drawings folder.
+        //
+        //2. Value types are types that get stored on the stack, this includes: int, double , bool, char and struct. Most value types are
+        //   primitive but for example struct is not primitive but still a value type. Value types can also not be null by default.
+        //   Value types are always unique so for example if I create "int int2 = int1" then they will both be the same value but if I change
+        //   int1 then int2 will not change.
+        //
+        //   Reference types however have their pointer stored on the stack but their actual value stored on the heap. Objects, strings, lists
+        //   and arrays are examples of reference types. If you do the same operation as I showed above "Car car2 = car1" Then you will have 
+        //   Two pointers which are stored on the stack pointing to the same object on the heap. This means that if you change color on car1
+        //   then car2 will also change color since they are the same car. So instead of copying a car you could create a deep or shallow copy instead.
+        //
+        //3. The first method assigns x to 3 and never changes x.
+        //
+        //   The second method however creates two objects from the class MyInt which are reference types. This means that when you assign y
+        //   to x that you have two pointers to the same object so when you change y you also change x.
+
         while (true)
         {
             Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
@@ -56,6 +82,9 @@ class Program
                     Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4)");
                     break;
             }
+            Console.WriteLine(Environment.NewLine + "Hit enter to go back to the main menu.");
+            Console.ReadLine();
+            Console.Clear();
         }
     }
 
@@ -75,7 +104,19 @@ class Program
 
     static void ExamineList()
     {
-        Console.Write("Write a string starting with + to add to theList and starting with - to remove from theList: ");
+        /*  
+            2. The list starts out with a capacity of 4 and increases when the count goes over the capacity.
+
+            3. The list capacity increases in size by 100%.
+
+            4.
+
+            5.
+
+            6. When you know how many items are going to be in an array.
+        
+        */
+        Console.Write("Enter q to go back to the main menu"+ Environment.NewLine + "Write a string starting with + to add to theList and starting with - to remove from theList: ");
         string input;
         List<string> theList = new List<string>();
 
@@ -85,7 +126,7 @@ class Program
             char nav = input[0];
             string value = input.Substring(1);
 
-            switch (nav)
+            switch (char.ToUpper(nav))
             {
                 case '+':
                     theList.Add(value);
@@ -102,6 +143,9 @@ class Program
                        $"Count: {theList.Count}{Environment.NewLine}" +
                        $"-------------------------------------");
 
+                    break;
+
+                case 'Q':
                     break;
                 default:
                     Console.WriteLine("You have to use - or + at the start of the input.");
@@ -213,14 +257,10 @@ class Program
          * Use this method to check if the paranthesis in a string is Correct or incorrect.
          * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
          * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
-        
-                                                                                        (){}
-     
-     
      */
     static void CheckParanthesis()
     {
-        Console.Write("Write a string with parenthesis and you will be informed if it is valid.");
+        Console.WriteLine("Write a string with parenthesis and you will be informed if it is valid.");
         string input = Console.ReadLine();
 
         Stack<char> openP = new Stack<char>();
@@ -234,7 +274,7 @@ class Program
 
                 else if (c == ')' || c == '}' || c == ']')
                 {
-                    bool stackHasValue = openP.TryPop(out char pop);
+                    bool stackHasValue = openP.TryPop(out char pop); //´\0´
 
                     if (c == ')' && pop != '(' ||
                         c == ']' && pop != '[' ||
@@ -249,6 +289,19 @@ class Program
         }
         else
             Console.WriteLine("Your string doesn't contain any parenthesis.");
+    }
+
+
+    static int RecursiveOdd(int n)
+    {
+
+        if (n == 1)
+        {
+            return 1;
+        }
+
+        return (RecursiveOdd(n - 1) + 2);
+
     }
 }
 
