@@ -109,14 +109,16 @@ class Program
 
             3. The list capacity increases in size by 100%.
 
-            4.
+            4. Because the list does not know how many items are supposed to be in the list so it attempts to do as few increases of capacity
+               as possible while still keeping the list capacity reasonable.
 
-            5.
+            5. No the capacity does not decrease when items are removed. I think this is because the list doesn't want to take up performance 
+               and expects the list to be used again.
 
-            6. When you know how many items are going to be in an array.
+            6. When you know how many items are going to be in an array. 
         
         */
-        Console.Write("Enter q to go back to the main menu"+ Environment.NewLine + "Write a string starting with + to add to theList and starting with - to remove from theList: ");
+        Console.Write("Enter q to go back to the main menu" + Environment.NewLine + "Write a string starting with + to add to theList and starting with - to remove from theList: ");
         string input;
         List<string> theList = new List<string>();
 
@@ -167,7 +169,17 @@ class Program
        */
 
     static void ExamineQueue()
-    {
+    {   /*
+         1. "ICA queue" in drawings folder. 
+         
+         2. "ICA simulation" in drawings folder.
+         
+         
+         
+         
+         */
+
+
         Console.Write("Write a string starting with + to add to theQueue and starting with - to remove from theQueue: ");
         string input;
         Queue<string> theQueue = new Queue<string>();
@@ -210,7 +222,10 @@ class Program
        */
 
     static void ExamineStack()
-    {
+    { /*
+        1. "ICA stack" in Drawings folder. Because Kalle will be there until the store closes if more customers arrive.
+
+       */
         Console.Write("Write a string starting with + to add to theQueue and starting with - to remove from theQueue: ");
         string input;
         Stack<char> charStack = new Stack<char>();
@@ -259,7 +274,12 @@ class Program
          * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
      */
     static void CheckParanthesis()
-    {
+    {/*
+        1. The stack so that I can match the closing paranthesis with the open ones I have stored in the stack.
+           This is because if the stack is ({[( the next closing parenthesis has to be a ).
+      
+      */
+
         Console.WriteLine("Write a string with parenthesis and you will be informed if it is valid.");
         string input = Console.ReadLine();
 
