@@ -82,6 +82,7 @@ class Program
                     Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4)");
                     break;
             }
+            //To pause app and clear.
             Console.WriteLine(Environment.NewLine + "Hit enter to go back to the main menu.");
             Console.ReadLine();
             Console.Clear();
@@ -118,20 +119,21 @@ class Program
             6. When you know how many items are going to be in an array. 
         
         */
-        Console.Write("Enter q to go back to the main menu" + Environment.NewLine + "Write a string starting with + to add to theList and starting with - to remove from theList: ");
+        Console.Write($"Enter q to go back to the main menu{Environment.NewLine}Write a string starting with + to add to theList and starting with - to remove from theList: ");
         string input;
-        List<string> theList = new List<string>();
+        List<string> theList = new();
 
         do
         {
             input = Console.ReadLine();
-            char nav = input[0];
-            string value = input.Substring(1);
+            char nav = input[0]; //First char for switch.
+            string value = input.Substring(1);// Remove the first char from string.
 
-            switch (char.ToUpper(nav))
+            switch (nav)
             {
                 case '+':
-                    theList.Add(value);
+                    theList.Add(value);//Add to list
+                    //CW write out the added value, capacity and count.
                     Console.WriteLine($"Added {value}{Environment.NewLine}" +
                         $"Capacity: {theList.Capacity}{Environment.NewLine}" +
                         $"Count: {theList.Count}{Environment.NewLine}" +
@@ -139,7 +141,8 @@ class Program
 
                     break;
                 case '-':
-                    theList.Remove(value);
+                    theList.Remove(value);//Remove from list.
+                    //CW write out the removed value, capacity and count.
                     Console.WriteLine($"Removed {value}{Environment.NewLine}" +
                        $"Capacity: {theList.Capacity}{Environment.NewLine}" +
                        $"Count: {theList.Count}{Environment.NewLine}" +
@@ -150,6 +153,7 @@ class Program
                 case 'Q':
                     break;
                 default:
+                    //Default message.
                     Console.WriteLine("You have to use - or + at the start of the input.");
                     break;
             }
@@ -172,40 +176,50 @@ class Program
     {   /*
          1. "ICA queue" in drawings folder. 
          
-         2. "ICA simulation" in drawings folder.
-         
-         
-         
-         
+         2. "ICA queue demo" in drawings folder.
          */
 
-
-        Console.Write("Write a string starting with + to add to theQueue and starting with - to remove from theQueue: ");
+        Console.Write("Q to go back to menu." + Environment.NewLine + "Write a string starting with + to add to theQueue and - to remove from theQueue: ");
         string input;
-        Queue<string> theQueue = new Queue<string>();
+        //Create queue.
+        Queue<string> theQueue = new();
 
         do
         {
             input = Console.ReadLine();
-            char nav = input[0];
-            string value = input.Substring(1);
-
-            switch (nav)
+            if (input.Length > 0) //Make sure input isn't empty to avoid exception.
             {
-                case '+':
-                    theQueue.Enqueue(value);
-                    Console.WriteLine(string.Join(Environment.NewLine, theQueue));
+                char nav = input[0];//Gets first char of input.
+                string value = input.Substring(1); //Removes first char.
 
-                    break;
-                case '-':
-                    Console.WriteLine(string.Join(theQueue.Dequeue(), Environment.NewLine, theQueue));
+                switch (nav)
+                {
+                    case '+':
+                        //Adds input to the queue.
+                        theQueue.Enqueue(value);
+                        //CW that uses string.Join to make sure that theQueue is the correct format.
+                        Console.WriteLine($"{value} has been added to the queue.{Environment.NewLine}" +
+                            $"{Environment.NewLine}{string.Join(Environment.NewLine, theQueue)}");
 
-                    break;
-                default:
-                    Console.WriteLine("You have to use - or + at the start of the input.");
-                    break;
+                        break;
+                    case '-':
+                        //Make sure that Count is greater than zero to avoid exception trying to dequeue empty queue.
+                        if (theQueue.Count > 0)
+                            //Same as above to make sure the format is correct.
+                            Console.WriteLine($"{string.Join(Environment.NewLine, theQueue.Dequeue())} has been removed from the queue.{Environment.NewLine}" +
+                                $"{Environment.NewLine}{string.Join(Environment.NewLine, theQueue)}");
+
+                        else
+                            Console.WriteLine("Nothing to dequeue.");
+                        break;
+                    default:
+                        //Error message if the user doesn't use - or + input.
+                        Console.WriteLine("You have to use - or + at the start of the input.");
+                        break;
+                }
             }
-
+            else//Empty input
+                Console.WriteLine("No input. Please write a string with either - or + as a prefix.");
         } while (input.ToUpper() != "Q");
 
     }
@@ -226,45 +240,34 @@ class Program
         1. "ICA stack" in Drawings folder. Because Kalle will be there until the store closes if more customers arrive.
 
        */
-        Console.Write("Write a string starting with + to add to theQueue and starting with - to remove from theQueue: ");
-        string input;
-        Stack<char> charStack = new Stack<char>();
+        Console.Write("Write a string starting with + to add to theQueue and starting with - to remove fr: ");
 
-        do
-        {
-            input = Console.ReadLine();
-            char nav = input[0];
-            string value = input.Substring(1);
+        string input = Console.ReadLine();
+        //If the input is longer than 1 character.
+        if (input.Length > 1)
+            //Call the method with input.
+            ReverseStringWithStack(input);
 
-            switch (nav)
-            {
-                case '+':
-                    ReverseStringWithStack(charStack, value);
-
-                    break;
-                case '-':
-
-                    Console.WriteLine();
-
-                    break;
-                default:
-                    Console.WriteLine("You have to use - or + at the start of the input.");
-                    break;
-            }
-
-        } while (input.ToUpper() != "Q");
     }
 
-    private static void ReverseStringWithStack(Stack<char> charStack, string value)
+    private static void ReverseStringWithStack(string input)
     {
-        foreach (char c in value)
+        //Create a stack of characters.
+        Stack<char> charStack = new();
+
+        //Run through all characters in input and push the characters to the stack.
+        foreach (char c in input)
             charStack.Push(c);
+        //StringBuilder to increase performance because possibility of many concatenations.
+        StringBuilder sbReverse = new();
 
-        StringBuilder sbReverse = new StringBuilder();
+        //I first tried a Foreach loop but it threw InvalidOperationException. So I instead chose a while loop that 
+        //continues as long as there is something in the stack.
+        while (charStack.Count > 0)
+            //Pops the stack into the stringbuilder.
+            sbReverse.Append(charStack.Pop());
 
-        foreach (char c in charStack)
-            sbReverse.Append(charStack.Pop);
-
+        //ToString to write out as a string.
         Console.WriteLine(sbReverse.ToString());
     }
 
@@ -275,27 +278,31 @@ class Program
      */
     static void CheckParanthesis()
     {/*
-        1. The stack so that I can match the closing paranthesis with the open ones I have stored in the stack.
+        1. The stack so that I can match the closing parenthesis with the open ones I have stored in the stack.
            This is because if the stack is ({[( the next closing parenthesis has to be a ).
       
       */
 
         Console.WriteLine("Write a string with parenthesis and you will be informed if it is valid.");
         string input = Console.ReadLine();
-
-        Stack<char> openP = new Stack<char>();
-
-        if (input.IndexOfAny(new[] { '(', ')', '[', ']', '{', '}' }) >= 0)
+        //Stack of chars so that I can save the open parenthesis and pop them in reverse order.
+        Stack<char> openP = new();
+        //Checks if input contains atleast 1 parenthesis of any kind.
+        if (input.IndexOfAny(['(', ')', '[', ']', '{', '}']) >= 0)
         {
+            //Iterate over all the characters in the string.
             foreach (char c in input)
             {
+                //If the current character is a opening parenthesis it gets added to the stack.
                 if (c == '(' || c == '{' || c == '[')
                     openP.Push(c);
-
+                //If the current character is a closing parenthesis.
                 else if (c == ')' || c == '}' || c == ']')
                 {
-                    bool stackHasValue = openP.TryPop(out char pop); //´\0´
+                    //Pop the open parenthesis that is ontop in the stack. TryPop to avoid exception if empty. Discard bool since I'm not using it.
+                    _ = openP.TryPop(out char pop); //pop equals ´\0´ if TryPop fails.
 
+                    //If pop(open parenthesis or default value) doesn't match the current character, CW not valid and return.
                     if (c == ')' && pop != '(' ||
                         c == ']' && pop != '[' ||
                         c == '}' && pop != '{')
@@ -305,13 +312,17 @@ class Program
                     }
                 }
             }
-            Console.WriteLine("Your string is valid!");
+            //Runs if the foreach goes without any errors.
+            if (openP.Count == 0)
+                Console.WriteLine("Your string is valid!");
+            else Console.WriteLine("Your string is not valid.");
         }
         else
+            //Runs if the input does not contain any parenthesis.
             Console.WriteLine("Your string doesn't contain any parenthesis.");
     }
 
-
+    //WIP
     static int RecursiveOdd(int n)
     {
 
